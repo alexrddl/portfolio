@@ -15,9 +15,10 @@
     --ink:#16181D;
     --ink-muted:#6B6D66;
     --line:#E4E3DC;
-    --accent:#2F5CFF;
-    --accent-wash:#EAF0FF;
-    --marker:#D8FF3E;
+    --accent:#CFF43A;
+    --accent-ink:#233306;
+    --accent-wash:#F5FFDD;
+    --marker:#CFF43A;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -112,11 +113,19 @@
     max-width:60ch;
   }
 
+  .group-label{
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--ink-muted);
+    margin:0 0 8px;
+  }
   .skills{
     display:flex;
     flex-wrap:wrap;
     gap:8px;
-    margin:0 0 22px;
+    margin:0 0 20px;
     padding:0;
     list-style:none;
   }
@@ -129,6 +138,15 @@
     color:var(--ink-muted);
     background:var(--paper);
   }
+  .skills.gear li{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--ink);
+    border-color:var(--accent);
+    background:var(--accent-wash);
+  }
+  .skills.gear svg{width:14px;height:14px;flex-shrink:0;color:#6B7A1F;}
 
   .socials{
     display:flex;
@@ -156,9 +174,9 @@
   .socials a.primary{
     background:var(--accent);
     border-color:var(--accent);
-    color:#fff;
+    color:var(--accent-ink);
   }
-  .socials a.primary:hover{background:#2549D6;}
+  .socials a.primary:hover{background:#BEEA1F;}
   .socials svg{width:15px;height:15px;flex-shrink:0;}
 
   /* ---------- PORTFOLIO ---------- */
@@ -420,12 +438,14 @@
     gap:7px;
     text-decoration:none;
     background:var(--accent);
-    color:#fff;
+    color:var(--accent-ink);
     font-weight:600;
     font-size:13px;
     padding:11px 18px;
     border-radius:999px;
+    transition:background .15s ease;
   }
+  .modal-link:hover{background:#BEEA1F;}
   .modal-link svg{width:14px;height:14px;}
 
   @media (max-width:640px){
@@ -456,13 +476,24 @@
 
     <p class="bio">Веду визуал и соцсети брендов ELEGANZZA и LABBRA: от съёмки и монтажа на своей технике до AI-кампаний, дизайна сайтов и рекламных материалов. Ниже — примеры реальных работ за последние месяцы.</p>
 
+    <p class="group-label">Навыки</p>
     <ul class="skills">
       <li>SMM</li>
       <li>Контент-стратегия</li>
       <li>AI-контент</li>
-      <li>Видеосъёмка и монтаж</li>
-      <li>Дизайн-концепция</li>
-      <li>Оформление сайтов</li>
+      <li>Съёмка</li>
+      <li>Монтаж видео</li>
+      <li>Adobe Photoshop</li>
+      <li>Figma</li>
+      <li>Разработка и создание рассылок</li>
+      <li>Создание и оформление дизайна сайтов</li>
+    </ul>
+
+    <p class="group-label">Съёмочная техника</p>
+    <ul class="skills gear">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h2l1.5-2h9L18 8h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.3"/></svg>Canon EOS R</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h2l1.5-2h9L18 8h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.3"/></svg>Fujifilm X-M5</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/></svg>iPhone 17 Pro</li>
     </ul>
 
     <div class="socials">
