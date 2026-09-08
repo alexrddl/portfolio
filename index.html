@@ -17,10 +17,6 @@
     --line:#E4E3DC;
     --accent:#2F5CFF;
     --accent-wash:#EAF0FF;
-    --coral:#FF6B4A;
-    --coral-wash:#FFEEE8;
-    --teal:#159E86;
-    --teal-wash:#E4F5F1;
     --marker:#D8FF3E;
   }
   *{box-sizing:border-box;}
@@ -59,8 +55,8 @@
     gap:16px;
   }
   .avatar{
-    width:112px;
-    height:112px;
+    width:56px;
+    height:56px;
     border-radius:50%;
     background:var(--accent);
     color:#fff;
@@ -198,11 +194,14 @@
     border-radius:16px;
     overflow:hidden;
     border:1px solid var(--line);
-    text-decoration:none;
+    cursor:pointer;
     color:inherit;
     display:flex;
     align-items:flex-end;
     background:var(--card);
+    padding:0;
+    text-align:left;
+    font:inherit;
   }
   .tile img{
     position:absolute;
@@ -241,20 +240,22 @@
     color:#fff;
   }
 
-  .tile-link-icon{
+  .tile-count{
     position:absolute;
     top:12px;
     right:12px;
     z-index:1;
-    width:26px;
-    height:26px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.9);
+    font-size:11px;
+    font-weight:600;
+    color:#fff;
+    background:rgba(0,0,0,0.4);
+    padding:4px 9px;
+    border-radius:999px;
     display:flex;
     align-items:center;
-    justify-content:center;
+    gap:4px;
   }
-  .tile-link-icon svg{width:12px;height:12px;color:var(--ink);}
+  .tile-count svg{width:11px;height:11px;}
 
   /* ---------- FOOTER CTA ---------- */
   .cta{
@@ -291,11 +292,148 @@
   }
   .cta a:hover{transform:translateY(-1px);}
 
+  /* ---------- MODAL / LIGHTBOX ---------- */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(12,13,16,0.82);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    z-index:100;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:var(--card);
+    border-radius:20px;
+    max-width:560px;
+    width:100%;
+    max-height:92vh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .modal-close{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:rgba(0,0,0,0.45);
+    border:none;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:3;
+  }
+  .modal-close svg{width:16px;height:16px;}
+
+  .slider{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    background:var(--paper);
+    flex-shrink:0;
+  }
+  .slider-track{
+    position:relative;
+    width:100%;
+    height:100%;
+  }
+  .slider-track img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity .25s ease;
+  }
+  .slider-track img.active{opacity:1;}
+
+  .slider-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.9);
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:2;
+  }
+  .slider-arrow svg{width:16px;height:16px;color:var(--ink);}
+  .slider-arrow.prev{left:12px;}
+  .slider-arrow.next{right:12px;}
+  .slider-arrow:disabled{display:none;}
+
+  .slider-dots{
+    position:absolute;
+    bottom:12px;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    z-index:2;
+  }
+  .slider-dots button{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    border:none;
+    padding:0;
+    background:rgba(255,255,255,0.5);
+    cursor:pointer;
+  }
+  .slider-dots button.active{background:#fff; width:16px; border-radius:3px;}
+
+  .modal-info{
+    padding:20px 22px 22px;
+  }
+  .modal-info .type{
+    display:block;
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink-muted);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:4px;
+  }
+  .modal-info h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:18px;
+    margin:0 0 16px;
+    line-height:1.25;
+  }
+  .modal-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    text-decoration:none;
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+    font-size:13px;
+    padding:11px 18px;
+    border-radius:999px;
+  }
+  .modal-link svg{width:14px;height:14px;}
+
   @media (max-width:640px){
     .grid{grid-template-columns:repeat(2, 1fr);}
     .tile.big{grid-column:span 2; grid-row:span 2;}
     .tile.wide{grid-column:span 2;}
     .hero{padding:24px;}
+    .modal-box{max-height:96vh;}
   }
 </style>
 </head>
@@ -347,79 +485,10 @@
   <section class="portfolio">
     <div class="section-head">
       <h2>Избранные работы</h2>
-      <p>Фото и дизайн — из реальных проектов</p>
+      <p>Нажми на карточку — откроются все фото проекта</p>
     </div>
 
-    <div class="grid">
-
-      <a href="https://disk.yandex.ru/d/AvYhAFRu5yfvAQ/2_LABBRA/5_AI%20campaign%20LABBRA" target="_blank" rel="noopener" class="tile big">
-        <img src="assets/labbra-ai-campaign.jpg" alt="AI-кампания для бренда LABBRA">
-        <span class="tile-caption">
-          <span class="type">AI-кампания</span>
-          <span class="title">Рекламный визуал для LABBRA</span>
-        </span>
-      </a>
-
-      <a href="https://www.instagram.com/notes_byxenia/" target="_blank" rel="noopener" class="tile">
-        <img src="assets/calista-product.jpg" alt="Предметная съёмка для CALISTA">
-        <span class="tile-caption">
-          <span class="type">Съёмка</span>
-          <span class="title">Визуал для CALISTA</span>
-        </span>
-      </a>
-
-      <a href="https://eleganzza.ru" target="_blank" rel="noopener" class="tile">
-        <img src="assets/eleganzza-website.jpg" alt="Оформление сайта ELEGANZZA">
-        <span class="tile-link-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </span>
-        <span class="tile-caption">
-          <span class="type">Дизайн сайта</span>
-          <span class="title">eleganzza.ru</span>
-        </span>
-      </a>
-
-      <a href="https://www.instagram.com/notes_byxenia/" target="_blank" rel="noopener" class="tile wide">
-        <img src="assets/gretta-website.jpg" alt="Дизайн сайта для бренда Гретта">
-        <span class="tile-caption">
-          <span class="type">UI-дизайн</span>
-          <span class="title">Прототип сайта · Гретта</span>
-        </span>
-      </a>
-
-      <a href="https://www.instagram.com/notes_byxenia/" target="_blank" rel="noopener" class="tile">
-        <img src="assets/labbra-giftcards.jpg" alt="Подарочные карты LABBRA">
-        <span class="tile-caption">
-          <span class="type">Графика</span>
-          <span class="title">Подарочные карты LABBRA</span>
-        </span>
-      </a>
-
-      <a href="https://www.instagram.com/notes_byxenia/" target="_blank" rel="noopener" class="tile wide">
-        <img src="assets/charuel-visual.jpg" alt="Визуал для бренда Charuel">
-        <span class="tile-caption">
-          <span class="type">Съёмка</span>
-          <span class="title">Визуал для Charuel</span>
-        </span>
-      </a>
-
-      <a href="https://www.instagram.com/notes_byxenia/" target="_blank" rel="noopener" class="tile">
-        <img src="assets/eleganzza-branding.jpg" alt="AI-брендинг ELEGANZZA">
-        <span class="tile-caption">
-          <span class="type">Брендинг · AI</span>
-          <span class="title">Кампания ELEGANZZA</span>
-        </span>
-      </a>
-
-      <a href="https://www.instagram.com/notes_byxenia/" target="_blank" rel="noopener" class="tile">
-        <img src="assets/labbra-banner.jpg" alt="Веб-баннер LABBRA">
-        <span class="tile-caption">
-          <span class="type">Web-баннер</span>
-          <span class="title">Распродажа · LABBRA</span>
-        </span>
-      </a>
-
-    </div>
+    <div class="grid" id="grid"></div>
   </section>
 
   <!-- ===== CTA ===== -->
@@ -433,6 +502,182 @@
   </div>
 
 </div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" style="position:relative;">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="slider">
+      <div class="slider-track" id="sliderTrack"></div>
+      <button class="slider-arrow prev" id="prevBtn" aria-label="Назад">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button class="slider-arrow next" id="nextBtn" aria-label="Вперёд">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+    <div class="modal-info">
+      <span class="type" id="modalType"></span>
+      <h3 id="modalTitle"></h3>
+      <a href="#" target="_blank" rel="noopener" class="modal-link" id="modalLink">
+        <span id="modalLinkLabel">Открыть в Instagram</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const IG = "https://www.instagram.com/notes_byxenia/";
+
+  const projects = [
+    {
+      id: "labbra-ai",
+      size: "big",
+      type: "AI-кампания",
+      title: "Рекламный визуал для LABBRA",
+      images: ["assets/labbra-ai-1.jpg","assets/labbra-ai-2.jpg","assets/labbra-ai-3.jpg","assets/labbra-ai-4.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "calista",
+      size: "",
+      type: "Съёмка",
+      title: "Визуал для CALISTA",
+      images: ["assets/calista-1.jpg","assets/calista-2.jpg","assets/calista-3.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "eleganzza-site",
+      size: "",
+      type: "Дизайн сайта",
+      title: "eleganzza.ru",
+      images: ["assets/eleganzza-site-1.jpg","assets/eleganzza-site-2.jpg","assets/eleganzza-site-3.jpg","assets/eleganzza-site-4.jpg"],
+      link: "https://eleganzza.ru", linkLabel: "Открыть сайт eleganzza.ru"
+    },
+    {
+      id: "gretta",
+      size: "wide",
+      type: "UI-дизайн",
+      title: "Прототип сайта · Гретта",
+      images: ["assets/gretta-1.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "labbra-cards",
+      size: "",
+      type: "Графика",
+      title: "Подарочные карты LABBRA",
+      images: ["assets/labbra-cards-1.jpg","assets/labbra-cards-2.jpg","assets/labbra-cards-3.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "charuel",
+      size: "wide",
+      type: "Съёмка",
+      title: "Визуал для Charuel",
+      images: ["assets/charuel-1.jpg","assets/charuel-2.jpg","assets/charuel-3.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "eleganzza-brand",
+      size: "",
+      type: "Брендинг · AI",
+      title: "AI-кампания ELEGANZZA",
+      images: ["assets/eleganzza-brand-1.jpg","assets/eleganzza-brand-2.jpg","assets/eleganzza-brand-3.jpg","assets/eleganzza-brand-4.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "labbra-banner",
+      size: "",
+      type: "Web-баннер",
+      title: "Баннеры для сайта LABBRA",
+      images: ["assets/labbra-banner-1.jpg","assets/labbra-banner-2.jpg","assets/labbra-banner-3.jpg","assets/labbra-banner-4.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    }
+  ];
+
+  const grid = document.getElementById('grid');
+  projects.forEach((p, idx) => {
+    const tile = document.createElement('button');
+    tile.className = 'tile' + (p.size ? ' ' + p.size : '');
+    tile.innerHTML = `
+      <img src="${p.images[0]}" alt="${p.title}">
+      ${p.images.length > 1 ? `<span class="tile-count"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 21h14V7"/></svg>${p.images.length}</span>` : ''}
+      <span class="tile-caption">
+        <span class="type">${p.type}</span>
+        <span class="title">${p.title}</span>
+      </span>`;
+    tile.addEventListener('click', () => openModal(idx));
+    grid.appendChild(tile);
+  });
+
+  const overlay = document.getElementById('modalOverlay');
+  const sliderTrack = document.getElementById('sliderTrack');
+  const sliderDots = document.getElementById('sliderDots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const modalType = document.getElementById('modalType');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalLink = document.getElementById('modalLink');
+  const modalLinkLabel = document.getElementById('modalLinkLabel');
+
+  let current = null;
+  let slideIndex = 0;
+
+  function openModal(idx){
+    current = projects[idx];
+    slideIndex = 0;
+    modalType.textContent = current.type;
+    modalTitle.textContent = current.title;
+    modalLink.href = current.link;
+    modalLinkLabel.textContent = current.linkLabel;
+
+    sliderTrack.innerHTML = current.images.map((src,i) =>
+      `<img src="${src}" alt="${current.title} ${i+1}" class="${i===0?'active':''}">`
+    ).join('');
+    sliderDots.innerHTML = current.images.map((_,i) =>
+      `<button class="${i===0?'active':''}" data-i="${i}" aria-label="Слайд ${i+1}"></button>`
+    ).join('');
+    sliderDots.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=> showSlide(parseInt(btn.dataset.i)));
+    });
+
+    const multi = current.images.length > 1;
+    prevBtn.disabled = !multi;
+    nextBtn.disabled = !multi;
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showSlide(i){
+    if(!current) return;
+    const n = current.images.length;
+    slideIndex = (i + n) % n;
+    sliderTrack.querySelectorAll('img').forEach((img,j)=> img.classList.toggle('active', j===slideIndex));
+    sliderDots.querySelectorAll('button').forEach((d,j)=> d.classList.toggle('active', j===slideIndex));
+  }
+
+  prevBtn.addEventListener('click', ()=> showSlide(slideIndex-1));
+  nextBtn.addEventListener('click', ()=> showSlide(slideIndex+1));
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e)=>{
+    if(!overlay.classList.contains('open')) return;
+    if(e.key === 'Escape') closeModal();
+    if(e.key === 'ArrowLeft') showSlide(slideIndex-1);
+    if(e.key === 'ArrowRight') showSlide(slideIndex+1);
+  });
+</script>
 
 </body>
 </html>
