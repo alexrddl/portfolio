@@ -23,12 +23,30 @@
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--paper);
     color:var(--ink);
     font-family:'Manrope',sans-serif;
     line-height:1.5;
+    min-height:100vh;
+    background-color:var(--paper);
+    background-image:
+      radial-gradient(ellipse 60% 45% at 12% -8%, rgba(207,244,58,0.24), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 105% 4%, rgba(147,197,253,0.18), transparent 60%),
+      radial-gradient(ellipse 65% 55% at 50% 108%, rgba(255,183,131,0.14), transparent 60%);
+    background-attachment:fixed;
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   }
   .wrap{
+    position:relative;
+    z-index:1;
     max-width:920px;
     margin:0 auto;
     padding:48px 20px 64px;
@@ -41,6 +59,7 @@
     border-radius:20px;
     padding:32px;
     margin-bottom:36px;
+    box-shadow:0 1px 2px rgba(22,24,29,0.04), 0 16px 40px -12px rgba(22,24,29,0.10);
   }
   .hero-top{
     display:flex;
@@ -69,14 +88,15 @@
     justify-content:center;
     flex-shrink:0;
     overflow:hidden;
-    border:1px solid var(--line);
-}
-.avatar img{
+    border:1px solid var(--card);
+    box-shadow:0 0 0 4px var(--accent-wash), 0 6px 18px -6px rgba(35,51,6,0.25);
+  }
+  .avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
     object-position:center;
-}
+  }
   h1{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
@@ -100,6 +120,10 @@
     gap:6px;
     font-size:12px;
     color:var(--ink-muted);
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:999px;
   }
   .status-dot{
     width:7px;
@@ -107,6 +131,7 @@
     border-radius:50%;
     background:#3FC96B;
     flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(63,201,107,0.18);
   }
   .bio{
     font-size:15px;
@@ -205,7 +230,7 @@
   .grid{
     display:grid;
     grid-template-columns:repeat(4, 1fr);
-    grid-auto-rows:130px;
+    grid-auto-rows:150px;
     grid-auto-flow:dense;
     gap:12px;
   }
@@ -222,6 +247,7 @@
     padding:0;
     text-align:left;
     font:inherit;
+    box-shadow:0 1px 2px rgba(22,24,29,0.05);
   }
   .tile img{
     position:absolute;
@@ -229,11 +255,14 @@
     width:100%;
     height:100%;
     object-fit:cover;
+    object-position:center;
     transition:transform .3s ease;
   }
   .tile:hover img{transform:scale(1.04);}
   .tile.big{grid-column:span 2; grid-row:span 2;}
   .tile.wide{grid-column:span 2;}
+  .tile.tall{grid-row:span 2;}
+  .tile.tall img{object-position:center top;}
 
   .tile-caption{
     position:relative;
@@ -280,11 +309,15 @@
   /* ---------- FOOTER CTA ---------- */
   .cta{
     margin-top:36px;
-    background:var(--ink);
+    background:
+      radial-gradient(circle at 18% 15%, rgba(207,244,58,0.16), transparent 42%),
+      radial-gradient(circle at 85% 0%, rgba(147,197,253,0.10), transparent 45%),
+      var(--ink);
     border-radius:20px;
     padding:32px;
     text-align:center;
     color:#fff;
+    box-shadow:0 20px 40px -16px rgba(22,24,29,0.35);
   }
   .cta h2{
     font-family:'Space Grotesk',sans-serif;
@@ -327,12 +360,13 @@
   .modal-box{
     background:var(--card);
     border-radius:20px;
-    max-width:560px;
-    width:100%;
-    max-height:92vh;
+    width:480px;
+    max-width:92vw;
     overflow:hidden;
     display:flex;
     flex-direction:column;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+    transition:width .25s ease;
   }
   .modal-close{
     position:absolute;
@@ -355,9 +389,10 @@
   .slider{
     position:relative;
     width:100%;
-    aspect-ratio:1/1;
+    height:320px;
     background:var(--paper);
     flex-shrink:0;
+    transition:height .25s ease;
   }
   .slider-track{
     position:relative;
@@ -369,7 +404,7 @@
     inset:0;
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
     opacity:0;
     transition:opacity .25s ease;
   }
@@ -382,13 +417,14 @@
     width:36px;
     height:36px;
     border-radius:50%;
-    background:rgba(255,255,255,0.9);
+    background:rgba(255,255,255,0.92);
     border:none;
     display:flex;
     align-items:center;
     justify-content:center;
     cursor:pointer;
     z-index:2;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
   }
   .slider-arrow svg{width:16px;height:16px;color:var(--ink);}
   .slider-arrow.prev{left:12px;}
@@ -411,10 +447,10 @@
     border-radius:50%;
     border:none;
     padding:0;
-    background:rgba(255,255,255,0.5);
+    background:rgba(120,120,120,0.35);
     cursor:pointer;
   }
-  .slider-dots button.active{background:#fff; width:16px; border-radius:3px;}
+  .slider-dots button.active{background:var(--ink); width:16px; border-radius:3px;}
 
   .modal-info{
     padding:20px 22px 22px;
@@ -455,7 +491,8 @@
     .tile.big{grid-column:span 2; grid-row:span 2;}
     .tile.wide{grid-column:span 2;}
     .hero{padding:24px;}
-    .modal-box{max-height:96vh;}
+    .modal-box{width:92vw;}
+    .slider{height:260px;}
   }
 </style>
 </head>
@@ -539,11 +576,11 @@
 
 <!-- ===== MODAL ===== -->
 <div class="modal-overlay" id="modalOverlay">
-  <div class="modal-box" style="position:relative;">
+  <div class="modal-box" id="modalBox" style="position:relative;">
     <button class="modal-close" id="modalClose" aria-label="Закрыть">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 6 12 12M18 6 6 18"/></svg>
     </button>
-    <div class="slider">
+    <div class="slider" id="slider">
       <div class="slider-track" id="sliderTrack"></div>
       <button class="slider-arrow prev" id="prevBtn" aria-label="Назад">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 6l-6 6 6 6"/></svg>
@@ -569,8 +606,16 @@
 
   const projects = [
     {
-      id: "labbra-ai",
+      id: "charuel",
       size: "big",
+      type: "Съёмка",
+      title: "Визуал для Charuel",
+      images: ["assets/charuel-1.jpg","assets/charuel-2.jpg","assets/charuel-3.jpg"],
+      link: IG, linkLabel: "Открыть в Instagram"
+    },
+    {
+      id: "labbra-ai",
+      size: "tall",
       type: "AI-кампания",
       title: "Рекламный визуал для LABBRA",
       images: ["assets/labbra-ai-1.jpg","assets/labbra-ai-2.jpg","assets/labbra-ai-3.jpg","assets/labbra-ai-4.jpg"],
@@ -578,7 +623,7 @@
     },
     {
       id: "calista",
-      size: "",
+      size: "tall",
       type: "Съёмка",
       title: "Визуал для CALISTA",
       images: ["assets/calista-1.jpg","assets/calista-2.jpg","assets/calista-3.jpg"],
@@ -586,7 +631,7 @@
     },
     {
       id: "eleganzza-site",
-      size: "",
+      size: "tall",
       type: "Дизайн сайта",
       title: "eleganzza.ru",
       images: ["assets/eleganzza-site-1.jpg","assets/eleganzza-site-2.jpg","assets/eleganzza-site-3.jpg","assets/eleganzza-site-4.jpg"],
@@ -602,23 +647,15 @@
     },
     {
       id: "labbra-cards",
-      size: "",
+      size: "tall",
       type: "Графика",
       title: "Подарочные карты LABBRA",
       images: ["assets/labbra-cards-1.jpg","assets/labbra-cards-2.jpg","assets/labbra-cards-3.jpg"],
       link: IG, linkLabel: "Открыть в Instagram"
     },
     {
-      id: "charuel",
-      size: "wide",
-      type: "Съёмка",
-      title: "Визуал для Charuel",
-      images: ["assets/charuel-1.jpg","assets/charuel-2.jpg","assets/charuel-3.jpg"],
-      link: IG, linkLabel: "Открыть в Instagram"
-    },
-    {
       id: "eleganzza-brand",
-      size: "",
+      size: "wide",
       type: "Брендинг · AI",
       title: "AI-кампания ELEGANZZA",
       images: ["assets/eleganzza-brand-1.jpg","assets/eleganzza-brand-2.jpg","assets/eleganzza-brand-3.jpg","assets/eleganzza-brand-4.jpg"],
@@ -650,6 +687,8 @@
   });
 
   const overlay = document.getElementById('modalOverlay');
+  const modalBox = document.getElementById('modalBox');
+  const slider = document.getElementById('slider');
   const sliderTrack = document.getElementById('sliderTrack');
   const sliderDots = document.getElementById('sliderDots');
   const prevBtn = document.getElementById('prevBtn');
@@ -661,6 +700,22 @@
 
   let current = null;
   let slideIndex = 0;
+
+  function fitBox(naturalW, naturalH){
+    const maxW = Math.min(window.innerWidth * 0.92, 640);
+    const maxH = window.innerHeight * 0.68;
+    const ratio = naturalW / naturalH;
+    let w = maxW, h = w / ratio;
+    if (h > maxH){ h = maxH; w = h * ratio; }
+    return {w, h};
+  }
+
+  function resizeToImage(imgEl){
+    if(!imgEl || !imgEl.naturalWidth) return;
+    const {w, h} = fitBox(imgEl.naturalWidth, imgEl.naturalHeight);
+    modalBox.style.width = w + 'px';
+    slider.style.height = h + 'px';
+  }
 
   function openModal(idx){
     current = projects[idx];
@@ -686,6 +741,13 @@
 
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    const firstImg = sliderTrack.querySelector('img');
+    if (firstImg.complete && firstImg.naturalWidth) {
+      resizeToImage(firstImg);
+    } else {
+      firstImg.addEventListener('load', () => resizeToImage(firstImg), {once:true});
+    }
   }
 
   function closeModal(){
@@ -697,8 +759,16 @@
     if(!current) return;
     const n = current.images.length;
     slideIndex = (i + n) % n;
-    sliderTrack.querySelectorAll('img').forEach((img,j)=> img.classList.toggle('active', j===slideIndex));
+    const imgs = sliderTrack.querySelectorAll('img');
+    imgs.forEach((img,j)=> img.classList.toggle('active', j===slideIndex));
     sliderDots.querySelectorAll('button').forEach((d,j)=> d.classList.toggle('active', j===slideIndex));
+
+    const activeImg = imgs[slideIndex];
+    if (activeImg.complete && activeImg.naturalWidth) {
+      resizeToImage(activeImg);
+    } else {
+      activeImg.addEventListener('load', () => resizeToImage(activeImg), {once:true});
+    }
   }
 
   prevBtn.addEventListener('click', ()=> showSlide(slideIndex-1));
@@ -710,6 +780,11 @@
     if(e.key === 'Escape') closeModal();
     if(e.key === 'ArrowLeft') showSlide(slideIndex-1);
     if(e.key === 'ArrowRight') showSlide(slideIndex+1);
+  });
+  window.addEventListener('resize', ()=>{
+    if(!overlay.classList.contains('open')) return;
+    const activeImg = sliderTrack.querySelectorAll('img')[slideIndex];
+    if(activeImg) resizeToImage(activeImg);
   });
 </script>
 
