@@ -89,6 +89,28 @@ h2{font:700 clamp(38px,6vw,72px)/.9 Space Grotesk,sans-serif;letter-spacing:-.05
 .toolkit{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
 .toolkit span{border:1px solid var(--line);padding:9px 12px;font:500 10px "DM Mono",monospace;text-transform:uppercase;background:var(--surface)}
 
+
+.profile-layout{display:grid;grid-template-columns:minmax(280px,.78fr) 1.22fr;gap:12px}
+.profile-photo{position:relative;min-height:650px;background:var(--acid);overflow:hidden}
+.profile-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9)}
+.photo-label{position:absolute;left:18px;bottom:18px;background:var(--ink);color:#fff;padding:8px 11px;font:500 10px "DM Mono",monospace;letter-spacing:.06em}
+.profile-info{display:grid;grid-template-rows:auto auto 1fr;gap:12px}
+.info-card{background:var(--surface);border:1px solid var(--line);padding:24px}
+.info-card-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line);font:500 10px "DM Mono",monospace;letter-spacing:.06em}
+.info-card-head span{color:var(--muted)}
+.info-card-body{padding-top:22px}
+.info-card-body h3{font:600 clamp(27px,3vw,43px)/.96 Space Grotesk,sans-serif;letter-spacing:-.04em;margin:0 0 18px}
+.info-card-body p{margin:0;max-width:550px;color:var(--muted);font-size:13px;line-height:1.7}
+.tag-grid{display:flex;flex-wrap:wrap;gap:7px;padding-top:17px}
+.tag-grid span{border:1px solid var(--line);padding:9px 11px;font:500 10px "DM Mono",monospace;text-transform:uppercase;background:#f4f3ed;transition:.18s}
+.tag-grid span:hover{background:var(--acid);border-color:var(--acid);color:var(--acid-dark)}
+.equipment-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:17px}
+.equipment-list div{border:1px solid var(--line);padding:16px 12px;min-height:78px;display:flex;flex-direction:column;justify-content:space-between}
+.equipment-list strong{font:600 15px Space Grotesk,sans-serif;letter-spacing:-.02em}
+.equipment-list small{font:500 9px "DM Mono",monospace;color:var(--muted);margin-top:8px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#56c878;box-shadow:0 0 0 4px rgba(86,200,120,.14);display:inline-block}
+.mini-marquee{display:flex;align-items:center;gap:17px;overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px;font:500 10px "DM Mono",monospace;color:var(--muted)}
+.mini-marquee i{font-style:normal;color:var(--ink)}
 .cta{background:var(--black);color:#fff;padding:80px 0;margin-top:40px}
 .cta-inner{display:flex;justify-content:space-between;align-items:end;gap:40px}
 .cta h2{font-size:clamp(52px,8vw,105px);max-width:700px}
@@ -124,8 +146,8 @@ footer{padding:24px 0 35px;display:flex;justify-content:space-between;font:10px 
   .grid{grid-template-columns:repeat(2,1fr)}.tile,.tile:nth-child(6n+1),.tile:nth-child(6n+4),.tile:nth-child(6n+5){grid-column:span 1;grid-row:span 1;min-height:230px}
   .tile:nth-child(3n+1){grid-column:span 2;min-height:370px}
   .services{grid-template-columns:1fr}.service,.service:nth-child(odd),.service:nth-child(even){border-right:0;padding:25px 0}
-  .about{grid-template-columns:1fr;gap:30px}.about-image{max-width:430px}.about-text{font-size:18px}
-  .cta{padding:65px 0}.cta-inner{display:block}.cta h2{font-size:55px}
+  .profile-layout{grid-template-columns:1fr}.profile-photo{min-height:470px}.profile-info{grid-template-rows:auto}.info-card{padding:20px}.equipment-list{grid-template-columns:1fr}
+  .about-text{font-size:18px}.cta{padding:65px 0}.cta-inner{display:block}.cta h2{font-size:55px}
   footer{display:block}.modal-info{display:block}.modal-link{display:inline-flex;margin-top:20px}.slider,.slider-track{min-height:55vh}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tile img{transition:none}.btn{transition:none}}
@@ -135,14 +157,14 @@ footer{padding:24px 0 35px;display:flex;justify-content:space-between;font:10px 
 
 <div class="wrap">
 <nav class="nav">
-  <a class="logo" href="#">KSENIA<span>style</span></a>
+  <a class="logo" href="#">KS<span>×</span></a>
   <div class="navlinks">
     <a href="#works">Works</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a>
   </div>
 </nav>
 
 <header class="hero">
-  <div class="eyebrow">SMM · CONTENT · AI CREATIVE · DIGITAL</div>
+  <div class="eyebrow"><span class="live-dot"></span> AVAILABLE FOR PROJECTS · SMM · CONTENT · AI · DIGITAL</div>
   <h1>ВИЗУАЛ,<br><em>КОТОРЫЙ</em><br>РАБОТАЕТ.</h1>
   <div class="hero-bottom">
     <div class="hero-copy">
@@ -154,7 +176,7 @@ footer{padding:24px 0 35px;display:flex;justify-content:space-between;font:10px 
       <a class="btn" href="https://t.me/ksushkahelp">Обсудить проект ↗</a>
     </div>
   </div>
-  <div class="stats">
+  <div class="mini-marquee"><span>SMM</span><i>✦</i><span>CONTENT</span><i>✦</i><span>AI CREATIVE</span><i>✦</i><span>PHOTO</span><i>✦</i><span>WEB DESIGN</span></div><div class="stats">
     <div class="stat"><b>08+</b><span>Projects</span></div>
     <div class="stat"><b>04</b><span>Creative directions</span></div>
     <div class="stat"><b>AI</b><span>Creative production</span></div>
@@ -189,19 +211,41 @@ footer{padding:24px 0 35px;display:flex;justify-content:space-between;font:10px 
   </div>
 </section>
 
-<section class="section" id="about">
+<section class="section profile-section" id="about">
   <div class="section-head">
-    <div><div class="kicker">03 — About</div><h2>ОБО МНЕ</h2></div>
+    <div><div class="kicker">03 — Profile</div><h2>ОБО МНЕ</h2></div>
+    <div class="section-note">Кто я, что умею и чем снимаю — аккуратно разделено по блокам.</div>
   </div>
-  <div class="about">
-    <div class="about-image"><img src="assets/avatarsite.jpg" alt="Ксения Шлепотина"></div>
-    <div class="about-text">
-      <p>Веду визуал и соцсети брендов <strong>ELEGANZZA</strong> и <strong>LABBRA</strong>: от съёмки и монтажа до AI-кампаний, дизайна сайтов и рекламных материалов.</p>
-      <p class="mono">Toolkit / Camera / Design / AI</p>
-      <div class="toolkit">
-        <span>Canon EOS RP</span><span>Fujifilm X-M5</span><span>iPhone 17 Pro</span>
-        <span>Photoshop</span><span>Figma</span><span>AI tools</span>
-      </div>
+  <div class="profile-layout">
+    <div class="profile-photo">
+      <img src="assets/avatarsite.jpg" alt="Ксения Шлепотина" loading="lazy">
+      <div class="photo-label">KS / CREATIVE</div>
+    </div>
+    <div class="profile-info">
+      <article class="info-card info-about">
+        <div class="info-card-head"><span>01</span><b>ОБО МНЕ</b></div>
+        <div class="info-card-body">
+          <h3>Создаю визуал<br>с характером.</h3>
+          <p>Веду визуал и соцсети брендов <strong>ELEGANZZA</strong> и <strong>LABBRA</strong>: от съёмки и монтажа до AI-кампаний, дизайна сайтов и рекламных материалов.</p>
+        </div>
+      </article>
+      <article class="info-card">
+        <div class="info-card-head"><span>02</span><b>НАВЫКИ</b></div>
+        <div class="tag-grid">
+          <span>SMM</span><span>Контент-стратегия</span><span>AI-контент</span>
+          <span>Съёмка</span><span>Монтаж видео</span><span>Photoshop</span>
+          <span>Figma</span><span>Рассылки</span><span>Дизайн сайтов</span>
+          <span>Рекламные материалы</span>
+        </div>
+      </article>
+      <article class="info-card equipment-card">
+        <div class="info-card-head"><span>03</span><b>ОБОРУДОВАНИЕ</b></div>
+        <div class="equipment-list">
+          <div><strong>Canon EOS RP</strong><small>CAMERA</small></div>
+          <div><strong>Fujifilm X-M5</strong><small>CAMERA</small></div>
+          <div><strong>iPhone 17 Pro</strong><small>MOBILE</small></div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
